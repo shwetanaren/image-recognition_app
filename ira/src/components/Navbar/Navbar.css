@@ -1,0 +1,7 @@
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Push items to opposite sides */
+    align-items: center;
+    padding: 1rem 1rem;
+   
+  }

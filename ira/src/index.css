@@ -30,18 +30,7 @@ body {
   min-height: 100vh;
 }
 
-/* h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-} */
 
-.navbar {
-  display: flex;
-  justify-content: space-between; /* Push items to opposite sides */
-  align-items: center;
-  padding: 1rem 1rem;
- 
-}
 
 .center{
   display: flex;
