@@ -1,7 +1,9 @@
 
+import './Navigation.css'
+
 function Navigation()  {
     return(
-        <a>Signout</a>
+        <h3 className="linktext">Signout</h3>
     );
 }
 
