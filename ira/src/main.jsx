@@ -46,7 +46,8 @@ class Main extends Component {
     super();
     this.state = {
       userInput: '', // stores URL entered by the user
-      imageUrl: '' // can store output for later use in FaceRecognition
+      imageUrl: '', // can store output for later use in FaceRecognition
+      boxes:[] //new state to store the bounding boxes. 
     };
   }
   
@@ -56,16 +57,46 @@ class Main extends Component {
 
   onButtonSubmit = () => {
     const IMAGE_URL = this.state.userInput;
-    // console.log('User input:', IMAGE_URL);
+    console.log('About to fetch Clarifai API');
     
     // Update the imageUrl state to display the image in FaceRecognition component
     this.setState({ imageUrl: IMAGE_URL });
   
     fetch(
-      "https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.userInput))
+      "/clarifai/v2/models/" + "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.userInput))
       .then(response => response.json())
-     };
+      .then(result => {
+        
+        const regions = result.outputs[0].data.regions;
+        
+         // Map each region to its bounding box data
+      const boxes =  regions.map(region => {
+         // Accessing and rounding the bounding box values
+         const boundingBox = region.region_info.bounding_box;
+          // Return the bounding box object directly. You can also round the values if needed.
+        return {
+          top_row: parseFloat(boundingBox.top_row.toFixed(3)),
+          left_col: parseFloat(boundingBox.left_col.toFixed(3)),
+          bottom_row: parseFloat(boundingBox.bottom_row.toFixed(3)),
+          right_col: parseFloat(boundingBox.right_col.toFixed(3))
+        }
+      });
 
+          // Update state with the bounding boxes
+        this.setState({ boxes });
+        
+         // Optional: Log concepts if you want to debug them
+      regions.forEach(region => {
+        region.data.concepts.forEach(concept => {
+          const name = concept.name;
+          const value = concept.value.toFixed(4);
+          console.log(`${name}: ${value}`);
+        });
+      });
+    })
+          
+         .catch(error => console.log('error', error));
+        }
   render() {
     return (
       <StrictMode>
@@ -75,10 +106,11 @@ class Main extends Component {
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit}
         />
-        <FaceRecognition imageUrl={this.state.imageUrl} />
+        {/* pass the boxes and imageUrl down as props */}
+        <FaceRecognition imageUrl={this.state.imageUrl} boxes={this.state.boxes}/>
       </StrictMode>
     );
   }
-}
+  }
 
 createRoot(document.getElementById('root')).render(<Main />);

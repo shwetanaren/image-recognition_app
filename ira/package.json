@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "clarifai": "^2.9.1",
     "particles-bg": "^2.5.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
