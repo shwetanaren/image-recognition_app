@@ -5,6 +5,8 @@ import Navbar from './components/Navbar/Navbar.jsx'
 import Rank from './Rank'
 import ImageLinkForm from './ImageLinkForm'
 import FaceRecognition from './FaceRecognition.jsx'
+import SigninForm from './components/Signin/Signin.jsx'
+import Register from './components/Register/Register.jsx'
 
 const returnClarifaiRequestOptions = (imageUrl) => {
 // Clarifai API credentials and model settings
@@ -46,8 +48,10 @@ class Main extends Component {
     super();
     this.state = {
       userInput: '', // stores URL entered by the user
-      imageUrl: '', // can store output for later use in FaceRecognition
-      boxes:[] //new state to store the bounding boxes. 
+      imageUrl: '', // can store output for later use in FaceRecognition and store in the image displayed before we enter a new URL
+      boxes:[] ,//new state to store the bounding boxes. 
+      route:'_signin_', //route checks the state of the component and accordingly changes the behavior of the app view.
+      isSignedIn: false,
     };
   }
   
@@ -97,17 +101,41 @@ class Main extends Component {
           
          .catch(error => console.log('error', error));
         }
+
+  onRouteChange = (route) => {
+    if (route === '_signout_'){
+      this.setState({isSignedIn: false})
+    } else if (route === '_home_') {
+      this.setState({isSignedIn: true})
+    }
+    this.setState({route: route});
+  };
+
+
   render() {
     return (
+      
       <StrictMode>
-        <Navbar />
-        <Rank />
-        <ImageLinkForm 
-          onInputChange={this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit}
-        />
-        {/* pass the boxes and imageUrl down as props */}
-        <FaceRecognition imageUrl={this.state.imageUrl} boxes={this.state.boxes}/>
+        <Navbar 
+        onRouteChange={this.onRouteChange} 
+        isSignedin={this.state.isSignedIn}/> 
+        
+        {this.state.route === '_home_' 
+        ? <div>
+          <Rank />
+          <ImageLinkForm 
+            onInputChange={this.onInputChange}
+            onButtonSubmit={this.onButtonSubmit}
+          />
+          <FaceRecognition imageUrl={this.state.imageUrl} boxes={this.state.boxes}/>{/* pass the boxes and imageUrl down as props */}
+        </div>
+        : (
+          this.state.route === '_signin_'
+          ? <SigninForm onRouteChange={this.onRouteChange}/>
+          : <Register onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn}/>
+
+        )
+      }
       </StrictMode>
     );
   }

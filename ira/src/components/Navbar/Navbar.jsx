@@ -3,7 +3,7 @@ import Navigation from "../Navigation/Navigation.jsx";
 import './Navbar.css'
 import ParticlesBg from "particles-bg";
 
-const Navbar = () => {
+const Navbar = ({onRouteChange, isSignedin}) => {
   return (
     <div>
     <div>
@@ -11,7 +11,7 @@ const Navbar = () => {
     </div>
     <nav className="navbar">
       <Logonav />
-      <Navigation />
+      <Navigation onRouteChange={onRouteChange} isSignedin={isSignedin}/>
     </nav>
     </div>
   );
