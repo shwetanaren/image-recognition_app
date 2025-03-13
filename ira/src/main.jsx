@@ -54,6 +54,12 @@ class Main extends Component {
       isSignedIn: false,
     };
   }
+
+  componentDidMount() {
+    fetch("http://localhost:3001")
+    .then(response => response.json())
+    .then(console.log)
+  }
   
   onInputChange = (event) => {
     this.setState({ userInput: event.target.value });
@@ -118,7 +124,7 @@ class Main extends Component {
       <StrictMode>
         <Navbar 
         onRouteChange={this.onRouteChange} 
-        isSignedin={this.state.isSignedIn}/> 
+        isSignedIn={this.state.isSignedIn}/> 
         
         {this.state.route === '_home_' 
         ? <div>
