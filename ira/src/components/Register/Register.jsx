@@ -64,7 +64,7 @@ class Register extends React.Component {
             Name:
           </label>
           <input
-            type="name"
+            type="text"
             id="name"
             name="name"
             placeholder="Enter your name"
@@ -101,7 +101,7 @@ class Register extends React.Component {
         </div>
         <button
           onClick={this.onSubmitSignIn}
-          type="submit"
+          type="button"
           className='buttonstyle'
           style={{
             backgroundColor: '#007BFF',

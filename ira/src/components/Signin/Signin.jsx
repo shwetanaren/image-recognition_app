@@ -35,7 +35,7 @@ class  SignInForm extends React.Component  {
         this.props.onRouteChange('_home_');
       } else {
         //update the error state with an error message
-        this.setState({error: "Error logging in: wrong credentials"})
+        this.setState({error: user.message || "Error logging in: wrong credentials"})
       }
     })
     .catch(error => {
@@ -64,7 +64,7 @@ class  SignInForm extends React.Component  {
             Email:
           </label>
           <input
-            type="email"
+            type="text"
             id="email"
             name="email"
             placeholder="Enter your email"
@@ -87,7 +87,7 @@ class  SignInForm extends React.Component  {
         </div>
         <button
           onClick={this.onSubmitSignIn}
-          type="submit"
+          type="button"
           className='buttonstyle'
           style={{
             backgroundColor: '#007BFF',
