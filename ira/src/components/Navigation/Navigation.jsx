@@ -2,7 +2,7 @@
 import './Navigation.css'
 
 function Navigation({onRouteChange, isSignedIn})  {
-    console.log('onRouteChange in Navigation:', onRouteChange);
+    // console.log('onRouteChange in Navigation:', onRouteChange);
     return(
         isSignedIn
         ?  (<h3 onClick={() => {onRouteChange('_signout_')}} className="linktext">Signout</h3>)

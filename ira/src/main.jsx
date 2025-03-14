@@ -52,13 +52,25 @@ class Main extends Component {
       boxes:[] ,//new state to store the bounding boxes. 
       route:'_signin_', //route checks the state of the component and accordingly changes the behavior of the app view.
       isSignedIn: false,
+      user:{
+        id: '',
+        name:'',
+        email:'',
+        entries: 0,
+        joined:''
+
+      }
     };
   }
 
-  componentDidMount() {
-    fetch("http://localhost:3001")
-    .then(response => response.json())
-    .then(console.log)
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      name:data.name,
+      email:data.email,
+      entries:data.entries,
+      joined:data.joined,
+    }})
   }
   
   onInputChange = (event) => {
@@ -76,10 +88,26 @@ class Main extends Component {
       "/clarifai/v2/models/" + "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.userInput))
       .then(response => response.json())
       .then(result => {
+
+        if (result) {
+          fetch("https://localhost:3000/image", {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id:this.state.user.id
+            })
+          })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, {entries:count}))
+          })
+        }
         
+      
+      // Extracts output from the API response to find the regions of face detection
         const regions = result.outputs[0].data.regions;
         
-         // Map each region to its bounding box data
+         // Maps each region to its bounding box data
       const boxes =  regions.map(region => {
          // Accessing and rounding the bounding box values
          const boundingBox = region.region_info.bounding_box;
@@ -92,7 +120,7 @@ class Main extends Component {
         }
       });
 
-          // Update state with the bounding boxes
+          // Updates the state with the bounding boxes
         this.setState({ boxes });
         
          // Optional: Log concepts if you want to debug them
@@ -108,37 +136,40 @@ class Main extends Component {
          .catch(error => console.log('error', error));
         }
 
-  onRouteChange = (route) => {
+  onRouteChange = (route) => { //calling this function for changes in the route
     if (route === '_signout_'){
       this.setState({isSignedIn: false})
     } else if (route === '_home_') {
       this.setState({isSignedIn: true})
     }
-    this.setState({route: route});
+    this.setState({route: route}); //route sets to the route that is being set
   };
 
 
   render() {
+    const { isSignedIn, route, imageUrl, boxes } = this.state;
     return (
       
       <StrictMode>
         <Navbar 
         onRouteChange={this.onRouteChange} 
-        isSignedIn={this.state.isSignedIn}/> 
+        isSignedIn={isSignedIn}/> 
         
-        {this.state.route === '_home_' 
+        {route === '_home_' 
         ? <div>
-          <Rank />
+          <Rank name={this.state.user.name} entries={this.state.user.entries}/>
           <ImageLinkForm 
             onInputChange={this.onInputChange}
             onButtonSubmit={this.onButtonSubmit}
           />
-          <FaceRecognition imageUrl={this.state.imageUrl} boxes={this.state.boxes}/>{/* pass the boxes and imageUrl down as props */}
+          <FaceRecognition 
+          imageUrl={imageUrl} 
+          boxes={boxes}/>{/* pass the boxes and imageUrl down as props */}
         </div>
         : (
           this.state.route === '_signin_'
-          ? <SigninForm onRouteChange={this.onRouteChange}/>
-          : <Register onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn}/>
+          ? <SigninForm loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+          : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn}/>
 
         )
       }
