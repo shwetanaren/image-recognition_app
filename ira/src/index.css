@@ -93,3 +93,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.entries {
+  font-size: large;
+  font-weight: 600;
+
+}
+
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* .prominent {
+  color: #0a2351; /* Change this to your desired color */
+  /* font-weight: bold; */
+/* } */

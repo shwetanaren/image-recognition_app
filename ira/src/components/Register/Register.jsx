@@ -48,19 +48,11 @@ class Register extends React.Component {
   
   render() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '70vh',
-        backgroundColor: 'lightcyan'
-      }}
-    >
-      <div className='formstyle' >
-        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Register</h2>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="name" style={{ display: 'block', marginBottom: '5px' }}>
+       <div className='container'>
+       <div className='form-container'>
+        <h2 >Register</h2>
+        <div>
+          <label htmlFor="name" >
             Name:
           </label>
           <input
@@ -73,12 +65,12 @@ class Register extends React.Component {
           />
         </div>
         
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>
+        <div >
+          <label htmlFor="email" >
             Email:
           </label>
           <input
-            type="email"
+            type="text"
             id="email"
             name="email"
             placeholder="Enter your email"
@@ -86,8 +78,8 @@ class Register extends React.Component {
             onChange={this.onEmailChange}
           />
         </div>
-        <div style={{ marginBottom: '20px' }}>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
+        <div >
+          <label htmlFor="password" >
             Password:
           </label>
           <input
@@ -102,11 +94,7 @@ class Register extends React.Component {
         <button
           onClick={this.onSubmitSignIn}
           type="button"
-          className='buttonstyle'
-          style={{
-            backgroundColor: '#007BFF',
-          }}
-        >
+            className='buttonstyle button-register'>
           Register
         </button>
       </div>

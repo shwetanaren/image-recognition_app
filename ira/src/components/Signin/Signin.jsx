@@ -48,21 +48,11 @@ class  SignInForm extends React.Component  {
   render () {
     const { onRouteChange } = this.props;
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '70vh',
-        backgroundColor: 'lightcyan'
-      }}
-    >
-      <div className='formstyle'>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign In</h2>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>
-            Email:
-          </label>
+    <div className='container'>
+      <div className='form-container'>
+        <h2 >Sign in with your credentials</h2>
+        <div>
+          <label htmlFor="email" > Email: </label>
           <input
             type="text"
             id="email"
@@ -72,8 +62,8 @@ class  SignInForm extends React.Component  {
             onChange={this.onEmailChange}
           />
         </div>
-        <div style={{ marginBottom: '20px' }}>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
+        <div >
+          <label htmlFor="password" >
             Password:
           </label>
           <input
@@ -88,20 +78,14 @@ class  SignInForm extends React.Component  {
         <button
           onClick={this.onSubmitSignIn}
           type="button"
-          className='buttonstyle'
-          style={{
-            backgroundColor: '#007BFF',
-          }}
+          className='buttonstyle button-signin'
         >
           Sign In
         </button>
         <button
           onClick={()=> {onRouteChange('_register_')}}
           type="button"
-          className='buttonstyle'
-          style={{
-            backgroundColor: '#28a745',
-          }}
+          className='buttonstyle button-register'
         >
           Register
         </button>

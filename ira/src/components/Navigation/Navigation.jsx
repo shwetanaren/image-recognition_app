@@ -7,7 +7,7 @@ function Navigation({onRouteChange, isSignedIn})  {
         isSignedIn
         ?  (<h3 onClick={() => {onRouteChange('_signout_')}} className="linktext">Signout</h3>)
         :   (<div>
-            <p onClick={()=> {onRouteChange('_home_')}} className='linktext'  > Signin </p>
+            <p onClick={()=> {onRouteChange('_signin_')}} className='linktext'  > Signin </p>
             <p onClick={()=> {onRouteChange('_register_')}} className='linktext'  > Register </p>
             </div>)
     );

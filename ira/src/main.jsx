@@ -90,7 +90,7 @@ class Main extends Component {
       .then(result => {
 
         if (result) {
-          fetch("https://localhost:3000/image", {
+          fetch("http://localhost:3000/image", {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -99,13 +99,16 @@ class Main extends Component {
           })
           .then(response => response.json())
           .then(count => {
-            this.setState(Object.assign(this.state.user, {entries:count}))
+           this.setState(Object.assign(this.state.user, {entries:count}))
+                // Update the user's entries immutably
+          console.log("Updated count from server:", count);
+          //this.setState({ user: { ...this.state.user, entries: count } });
           })
         }
         
       
       // Extracts output from the API response to find the regions of face detection
-        const regions = result.outputs[0].data.regions;
+      const regions = result.outputs[0].data.regions;
         
          // Maps each region to its bounding box data
       const boxes =  regions.map(region => {
