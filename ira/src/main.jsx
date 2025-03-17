@@ -8,40 +8,40 @@ import FaceRecognition from './FaceRecognition.jsx'
 import SigninForm from './components/Signin/Signin.jsx'
 import Register from './components/Register/Register.jsx'
 
-const returnClarifaiRequestOptions = (imageUrl) => {
-// Clarifai API credentials and model settings
-const PAT = '0371c5bf07fd45b195acd9ff30e41eef';
-const USER_ID = 'nash_1129';
-const APP_ID = 'my-first-application-a33ytm';
-const MODEL_ID = 'face-detection';
-const IMAGE_URL = imageUrl;
+// const returnClarifaiRequestOptions = (imageUrl) => {
+// // Clarifai API credentials and model settings
+// const PAT = '0371c5bf07fd45b195acd9ff30e41eef';
+// const USER_ID = 'nash_1129';
+// const APP_ID = 'my-first-application-a33ytm';
+// const MODEL_ID = 'face-detection';
+// const IMAGE_URL = imageUrl;
 
-const raw = JSON.stringify({
-  user_app_id: {
-    user_id: USER_ID,
-    app_id: APP_ID
-  },
-  inputs: [
-    {
-      data: {
-        image: {
-          url: imageUrl
-        }
-      }
-    }
-  ]
-});
+// const raw = JSON.stringify({
+//   user_app_id: {
+//     user_id: USER_ID,
+//     app_id: APP_ID
+//   },
+//   inputs: [
+//     {
+//       data: {
+//         image: {
+//           url: imageUrl
+//         }
+//       }
+//     }
+//   ]
+// });
 
-const requestOptions = {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': 'Key ' + PAT
-  },
-  body: raw
-};
-return requestOptions
-};
+// const requestOptions = {
+//   method: 'POST',
+//   headers: {
+//     'Accept': 'application/json',
+//     'Authorization': 'Key ' + PAT
+//   },
+//   body: raw
+// };
+// return requestOptions
+// };
 
 const initialState = {
   userInput: '', // stores URL entered by the user
@@ -57,6 +57,7 @@ const initialState = {
     joined:''
   }
 }
+
 
 class Main extends Component {
   constructor() {
@@ -80,13 +81,21 @@ class Main extends Component {
 
   onButtonSubmit = () => {
     const IMAGE_URL = this.state.userInput;
-    console.log('About to fetch Clarifai API');
+    // console.log('About to fetch Clarifai API');
+    console.log('About to send image URL to my server');
     
     // Update the imageUrl state to display the image in FaceRecognition component
     this.setState({ imageUrl: IMAGE_URL });
+
+    // Send the image URL to your server’s /clarifai endpoint
+  fetch("http://localhost:3000/clarifai", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ imageUrl: IMAGE_URL })
+  })
   
-    fetch(
-      "/clarifai/v2/models/" + "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.userInput))
+    // fetch(
+    //   "/clarifai/v2/models/" + "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.userInput))
       .then(response => response.json())
       .then(result => {
 
