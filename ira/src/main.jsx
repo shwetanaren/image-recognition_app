@@ -43,24 +43,25 @@ const requestOptions = {
 return requestOptions
 };
 
+const initialState = {
+  userInput: '', // stores URL entered by the user
+  imageUrl: '', // can store output for later use in FaceRecognition and store in the image displayed before we enter a new URL
+  boxes:[] ,//new state to store the bounding boxes. 
+  route:'_signin_', //route checks the state of the component and accordingly changes the behavior of the app view.
+  isSignedIn: false,
+  user:{
+    id: '',
+    name:'',
+    email:'',
+    entries: 0,
+    joined:''
+  }
+}
+
 class Main extends Component {
   constructor() {
     super();
-    this.state = {
-      userInput: '', // stores URL entered by the user
-      imageUrl: '', // can store output for later use in FaceRecognition and store in the image displayed before we enter a new URL
-      boxes:[] ,//new state to store the bounding boxes. 
-      route:'_signin_', //route checks the state of the component and accordingly changes the behavior of the app view.
-      isSignedIn: false,
-      user:{
-        id: '',
-        name:'',
-        email:'',
-        entries: 0,
-        joined:''
-
-      }
-    };
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -139,9 +140,10 @@ class Main extends Component {
          .catch(error => console.log('error', error));
         }
 
+        //onroutechange gets called when we click on any of the routes 
   onRouteChange = (route) => { //calling this function for changes in the route
     if (route === '_signout_'){
-      this.setState({isSignedIn: false})
+      this.setState(initialState)
     } else if (route === '_home_') {
       this.setState({isSignedIn: true})
     }
