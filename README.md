@@ -1,12 +1,34 @@
-# React + Vite
+# Fancy Genie - Full Stack Face Detection App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my first ever full stack application! Fancy Genie lets users sign up, sign in, and enter a URL of an image containing faces. The app then uses a machine learning model (from Clarifai) to detect and highlight the faces in the image.
 
-Currently, two official plugins are available:
+## Hosted Application
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Check out the live app on Netlify:  
+[https://fancy-genie-6f67ae.netlify.app/](https://fancy-genie-6f67ae.netlify.app/)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **User Authentication:**  
+  Sign up and sign in to securely access your account.
+  
+- **Face Detection:**  
+  Enter an image URL and watch as the app highlights detected faces using a machine learning model.
+
+- **Responsive Design:**  
+  The app is built to work on various devices for a smooth user experience.
+
+## Tech Stack
+
+- **Frontend:**  
+  - React (built with Vite)
+  - CSS / HTML
+
+- **Backend:**  
+  - Node.js with Express
+  - Knex for database operations
+  - bcryptjs for password hashing
+  - backend hosted on Railway
+
+- **Database:**  
+  - PostgreSQL hosted on Railway
