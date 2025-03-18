@@ -88,7 +88,7 @@ class Main extends Component {
     this.setState({ imageUrl: IMAGE_URL });
 
     // Send the image URL to your server’s /clarifai endpoint
-  fetch("http://localhost:3000/clarifai", {
+  fetch("https://server-image-recognition-production.up.railway.app/clarifai", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ imageUrl: IMAGE_URL })
@@ -100,7 +100,7 @@ class Main extends Component {
       .then(result => {
 
         if (result) {
-          fetch("http://localhost:3000/image", {
+          fetch("https://server-image-recognition-production.up.railway.app/image", {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
