@@ -1,4 +1,4 @@
-# Fancy Genie - Full Stack Face Detection App
+# Full Stack - Face Detection App
 
 This is my first ever full stack application! Fancy Genie lets users sign up, sign in, and enter a URL of an image containing faces. The app then uses a machine learning model (from Clarifai) to detect and highlight the faces in the image.
 
